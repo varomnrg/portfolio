@@ -7,6 +7,7 @@ import TimeZone from "../components/TimeZoneCard.astro";
 import Now from "../components/Now.astro";
 import IconList from "../components/IconList.astro";
 import { Icon } from "astro-icon/components";
+import { INFO } from "../lib/constants";
 ---
 
 <script>
@@ -32,8 +33,8 @@ import { Icon } from "astro-icon/components";
 </script>
 
 <Layout
-  title="Timothy Aurelio - Freelance front-end Developer"
-  description="I'm a developer based in Italy, passionate about user experience and specializing in engaging animations and micro-interactions. My primary tools of choice include: JavaScript, React, Solid.js, Astro, Svelte, and Node.js."
+  title="Timothy Aurelio"
+  description="I'm a software engineer based in Indonesia. I love to build things that make people's lives easier."
 >
   <main
     class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
@@ -43,27 +44,14 @@ import { Icon } from "astro-icon/components";
     <Card
       colSpan="md:col-span-1"
       rowSpan="md:row-span-2 flex gap-4"
-      title="Blog"
+      title="Blog and Projects"
       href="/blog"
       />
 
     <Card colSpan="md:col-span-1" rowSpan="md:row-span-3" title="Frequently Used Stack">
       <div class="flex flex-row gap-1 flex-wrap mt-3">
         <IconList 
-          iconList={[
-            "golang", 
-            "cs", 
-            "dotnet", 
-            "docker", 
-            "javascript", 
-            "react-dark", 
-            "tailwindcss-dark", 
-            "redis-dark", 
-            "postgresql-dark", 
-            "git", 
-            "github-dark", 
-            "linux-dark"
-          ]} 
+          iconList={INFO.tech_stack} 
         />
       </div>
     </Card>
@@ -71,12 +59,12 @@ import { Icon } from "astro-icon/components";
     <ContactsCard />
     <TimeZone />
     
-    <Card colSpan="md:col-span-1" rowSpan="md:row-span-1" title="Github" href="https://github.com/varomnrg">
-      
-    </Card>
+    <Card colSpan="md:col-span-1" rowSpan="md:row-span-1" title="Github" href="https://github.com/varomnrg"/>
     <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
-      <p class="text-xs">
-        © 2024 · Crafted with ♥️ by Timothy.
+      <p class="text-xs text-center">
+        ©
+        {new Date().getFullYear()} · Created with ♥️ by Timothy.
+        Template by <a href="https://github.com/Ladvace/astro-bento-portfolio">Ladvace</a>
       </p>
     </Card>
   </main>

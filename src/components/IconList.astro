@@ -1,0 +1,19 @@
+---
+interface Props {
+  iconList: string[]; // Expect an array of strings
+}
+
+const { iconList } = Astro.props;
+import { Icon } from "astro-icon/components";
+---
+
+{iconList.map(icon => (
+  <Icon name={`skill-icons:${icon}`} />
+))}
+
+<style>
+[data-icon] {
+    font-size: 3rem;
+    color: var(--brand-color);
+}
+</style>

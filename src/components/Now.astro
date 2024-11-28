@@ -1,0 +1,27 @@
+---
+import Card from "./Card/index.astro";
+import Pulse from "./Pulse.astro";
+---
+
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-4">
+  <div class="flex justify-between w-full items-start mb-2">
+    <div class="flex flex-col">
+      <h2>Work Experience</h2>
+    </div>
+  </div>
+  <div class="space-y-3">
+    <div>
+      <h3 class="text-sm font-semibold">Software Developer Intern</h3>
+      <p class="text-xs text-gray-300">AXA Mandiri Financial Services | Jan 2024 - Oct 2024</p>
+      <div class="text-xs list-disc list-inside mt-1 space-y-1">
+        As a standout intern selected for the competitive Kampus Merdeka program, 
+        I developed .NET web solutions that transformed organizational workflows, 
+        streamlining processes for over 1000 employees by translating complex business needs into efficient technological solutions.
+      </div>
+    </div>
+    <div>
+      <h3 class="text-sm font-semibold">Freelance Software Developer</h3>
+      <p class="text-xs text-gray-300">Independent | Current</p>
+    </div>
+  </div>
+</Card>

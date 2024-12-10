@@ -1,54 +1,44 @@
 name: Deploy Astro Site
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-
-        steps:
-            # Checkout the code
-            - name: Checkout code
-              uses: actions/checkout@v3
-
-            # Setup pnpm
-            - name: Install pnpm
-              uses: pnpm/action-setup@v4
-              with:
-                  version: 9
-                  run_install: false
-
-            # Setup Node.js 20
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "20" # Use Node.js version 20
-                  cache: "pnpm" # Enable pnpm caching
-
-            # Install pnpm
-            - name: Install pnpm
-              run: npm install -g pnpm
-
-            # Install dependencies with pnpm
-            - name: Install dependencies
-              run: pnpm install
-
-            # Build the Astro site
-            - name: Build Astro site
-              run: pnpm run build
-
-            # Deploy to VPS
-            - name: Deploy to VPS
-              uses: appleboy/ssh-action@v0.1.8
-              with:
-                  host: ${{ secrets.VPS_HOST }}
-                  username: ${{ secrets.VPS_USER }}
-                  password: ${{ secrets.VPS_PASSWORD }}
-                  port: 22
-                  script: |
-                      rm -rf /home/app/portfolio/*
-                      mkdir -p /home/app/portfolio
-                      scp -r -o StrictHostKeyChecking=no /home/app/portfolio/dist/* ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/app/portfolio/
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # Setup pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: true
+      
+      # Setup Node.js 20
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+      
+      # Build the Astro site
+      - name: Build Astro site
+        run: pnpm run build
+      
+      # Deploy to VPS using rsync for better file transfer
+      - name: Deploy to VPS
+        uses: burnett01/rsync-deployments@6.0.0
+        with:
+          switches: -avzr --delete
+          path: dist/
+          remote_path: /home/app/portfolio
+          remote_host: ${{ secrets.VPS_HOST }}
+          remote_user: ${{ secrets.VPS_USER }}
+          remote_key: ${{ secrets.VPS_SSH_KEY }}

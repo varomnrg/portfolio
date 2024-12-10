@@ -1,0 +1,53 @@
+name: Deploy Astro Site
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        env:
+            DEPLOY_PATH: /home/app/portfolio # Deployment directory as an environment variable
+
+        steps:
+            # Checkout the code
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            # Setup Node.js 20
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20" # Use Node.js version 20
+                  cache: "pnpm" # Enable pnpm caching
+
+            # Install pnpm
+            - name: Install pnpm
+              run: npm install -g pnpm
+
+            # Install dependencies with pnpm
+            - name: Install dependencies
+              run: pnpm install
+
+            # Build the Astro site
+            - name: Build Astro site
+              run: pnpm run build
+
+            # Deploy to VPS using appleboy/ssh-action
+            - name: Deploy to VPS
+              uses: appleboy/ssh-action@v0.1.8
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  password: ${{ secrets.VPS_PASSWORD }}
+                  port: 22 # Update if using a non-default SSH port
+                  script: |
+                      rm -rf $DEPLOY_PATH/*
+                      mkdir -p $DEPLOY_PATH
+                  # Transfer files
+                  scp: true
+                  source: ./dist/*
+                  target: $DEPLOY_PATH/

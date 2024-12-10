@@ -8,7 +8,7 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-        
+
         steps:
             # Checkout the code
             - name: Checkout code
@@ -40,7 +40,7 @@ jobs:
             - name: Build Astro site
               run: pnpm run build
 
-            # Deploy to VPS using appleboy/ssh-action
+            # Deploy to VPS
             - name: Deploy to VPS
               uses: appleboy/ssh-action@v0.1.8
               with:
@@ -51,7 +51,4 @@ jobs:
                   script: |
                       rm -rf /home/app/portfolio/*
                       mkdir -p /home/app/portfolio
-                  # Transfer files
-                  scp: true
-                  source: ./dist/*
-                  target: /home/app/portfolio/
+                      scp -r -o StrictHostKeyChecking=no ./dist/* ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/app/portfolio/

@@ -54,4 +54,4 @@ jobs:
                   # Transfer files
                   scp: true
                   source: ./dist/*
-                  target: $DEPLOY_PATH/
+                  target: /home/app/portfolio/

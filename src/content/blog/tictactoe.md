@@ -88,4 +88,4 @@ Looking to the future, I’m excited to:
 
 Building this Tic-Tac-Toe game is really fun, just a small weekend project. It shows me a lot of knowledge of networking especially in go
 
-Here's the [Full source code on GitHub]([https://github.com/yourusername/go-tic-tac-toe-multiplayer](https://github.com/varomnrg/tictactoe-tcp))
+Here's the [Full source code on GitHub](https://github.com/varomnrg/tictactoe-tcp)
